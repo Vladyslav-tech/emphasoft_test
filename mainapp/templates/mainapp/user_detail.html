@@ -1,0 +1,31 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="user-details">
+        <div class="avatar-part">
+            {% if object.avatar %}
+                <img src="/media/{{ object.avatar }}">
+            {% else %}
+                <img class="user-detail-image" src="{{ '/media/users_avatars/default.jpg' }}">
+            {% endif %}
+        </div>
+        <div class="datail-part">
+            <p class="user-details-p">Никнейм : {{ object.username }}</p>
+            {% if object.first_name %}
+                <p class="user-details-p">Имя : {{ object.first_name|title }}</p>
+                {% if object.last_name %}
+                    <p class="user-details-p">Фамилия : {{ object.last_name|title }}</p>
+                {% endif %}
+                {% if object.patronymic %}
+                    <p class="user-details-p">Отчество : {{ object.patronymic|title }}</p>
+                {% endif %}
+                <p class="user-details-p">Email : {{ object.email|title }}</p>
+                {% if object.about %}
+                    <p class="user-details-p">О себе : {{  object.about }}</p>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

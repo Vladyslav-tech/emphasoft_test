@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{% block title %}{{ title|title }}{% endblock %}</title>
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    {% endblock %}
+</head>
+<body>
+    <div class="container-login">
+    <div class="login">
+        <div class="h2 text-center head">
+            {{ title|title }}
+        </div>
+    {% block content %}
+
+    {% endblock %}
+    </div>
+</div>
+</body>
+</html>

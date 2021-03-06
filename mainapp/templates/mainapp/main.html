@@ -1,0 +1,63 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{%  block content %}
+    {% if user.is_authenticated %}
+            <div class="user-hello">
+                <h2 class="user-hello-text">Привет, {{ user.first_name|default:'Пользователь' }}</h2>
+            </div>
+        {% endif %}
+    <div class="header">
+        <ul class="menu">
+            <li class="menu-list">
+                <a href="{% url 'mainapp:main' %}" class = "menu-link">ГЛАВНАЯ</a>
+            </li>
+
+            {% if user.is_authenticated %}
+                <li class="menu-list">
+                    <a class="menu-link" href="{% url 'auth:edit' %}">РЕДАКТИРОВАТЬ ДАННЫЕ</a>
+                </li>
+                <li class="menu-list">
+                    <a class="menu-link" href="{% url 'auth:logout' %}">ВЫХОД</a>
+                </li>
+            {% else %}
+                <li class="menu-list">
+                    <a class="menu-link" href="{% url 'auth:login' %}" >ВХОД</a>
+                </li>
+                <li class="menu-list">
+                    <a class="menu-link" href="{% url 'auth:register' %}" >РЕГИСТРАЦИЯ</a>
+                </li>
+            {%  endif %}
+        </ul>
+    </div>
+        <div class="users_list">
+        {% if user.is_authenticated %}
+            {% for object in object_list %}
+			<div class="user_record">
+                <a class="user_detail btn" href="{% url 'mainapp:user_detail' object.pk %}">Подробней</a>
+                {% if object.avatar %}
+				<img src="/media/{{ object.avatar }}" alt="{{ object.username }}">
+                {% else %}
+                <img src="{{ 'media/users_avatars/default.jpg' }}" alt="{{ object.username }}">
+                {% endif %}
+				<div class="user_name">
+					<p><strong>{{ object.username }}</strong></p>
+					<p>
+					{% if object.first_name %}
+						<b>{{ object.first_name|title }}</b>
+						{% if object.last_name %}
+							<p>{{ object.last_name|title }}</p>
+						{% endif %}
+					{% endif %}
+					</p>
+				</div>
+				<div class="user_email">
+					email:<br>
+					{{ object.email }}
+				</div>
+			</div>
+            {% endfor%}
+        {% endif %}
+        </div>
+
+{% endblock %}
